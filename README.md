@@ -2,7 +2,9 @@
 
 Landing pública do produto, em `atendeai.codertec.com.br`.
 
-Stack: **HTML + Tailwind via CDN** (sem build step) + **Cloudflare Pages Functions** pro form de contato (que envia e-mail via Resend).
+Stack: **HTML + Tailwind via CDN** + **Cloudflare Workers Assets** (estáticos + Worker que trata o form do contato e envia e-mail via Resend).
+
+> Inicialmente foi montado como Pages Functions (`functions/api/lead.js`), mas a Cloudflare unificou Workers + Pages e o fluxo "Connect to Git" sempre cria Worker — então migramos pra **Workers Assets** (`wrangler.toml` + `src/index.js`). O comportamento pro usuário final é idêntico.
 
 ---
 
@@ -10,67 +12,75 @@ Stack: **HTML + Tailwind via CDN** (sem build step) + **Cloudflare Pages Functio
 
 ```
 atende-ai-landing/
-├── index.html              ← a landing inteira (1 arquivo)
-├── functions/
-│   └── api/
-│       └── lead.js         ← POST /api/lead → envia e-mail via Resend
-├── _headers                ← security headers (HSTS, X-Frame, etc)
+├── wrangler.toml           ← config do Worker (name, main, assets)
+├── src/
+│   └── index.js            ← Worker: rota /api/lead + delega o resto pra ASSETS
+├── public/
+│   ├── index.html          ← landing inteira (1 arquivo)
+│   └── _headers            ← security headers (HSTS, X-Frame, etc)
 ├── .gitignore
 └── README.md
 ```
 
+## Como funciona
+
+- `wrangler.toml` declara que o Worker é `src/index.js` e os estáticos vivem em `public/`.
+- Toda request entra no Worker.
+  - `POST /api/lead` → handler `tratarLead()` que valida, anti-bot (honeypot), e chama API Resend
+  - Qualquer outra → `env.ASSETS.fetch(request)` serve o arquivo correspondente em `public/`
+
 ## Rodar local
 
-Não precisa servidor — abre o `index.html` direto no navegador.
+Abrir `public/index.html` direto no navegador serve pra ver visual. O form não funciona porque depende do Worker.
 
-O form **não funciona** localmente (depende da Function que só roda no Cloudflare). Pra testar form local, ver "Wrangler" abaixo.
-
-## Deploy
-
-1. Push pro GitHub (repo `atende-ai-landing`).
-2. Cloudflare Dashboard → Pages → Create a project → Connect to Git → escolher o repo.
-3. Build settings:
-   - **Framework preset:** None
-   - **Build command:** (vazio)
-   - **Build output directory:** `/`
-4. Em **Environment variables** (Production e Preview):
-   - `RESEND_API_KEY` — chave da Resend
-   - `RESEND_FROM` — `leads@atendeai.codertec.com.br` (ou outro remetente verificado)
-   - `RESEND_LEAD_TO` — e-mail que recebe os leads (ex.: `marlevek@gmail.com`)
-5. Deploy. Cloudflare te dá uma URL `*.pages.dev`.
-
-## Apontar `atendeai.codertec.com.br`
-
-1. No projeto do Cloudflare Pages → **Custom domains** → **Set up a custom domain** → `atendeai.codertec.com.br`.
-2. Cloudflare vai te mostrar o CNAME alvo (algo como `atende-ai-landing.pages.dev`).
-3. Como o DNS do `codertec.com.br` está na HostGator, criar lá:
-   - cPanel → **Zone Editor** → **Manage** do domínio `codertec.com.br`
-   - **Add Record** → tipo `CNAME`, name `atendeai`, value `atende-ai-landing.pages.dev`, TTL 14400
-4. Aguardar propagação (~5-30 min). Cloudflare verifica e ativa o SSL automaticamente.
-
-## Resend — verificar o domínio remetente
-
-Pra mandar de `leads@atendeai.codertec.com.br`, no Resend → Domains → Add → `atendeai.codertec.com.br` → seguir os DNS records (TXT/MX). Tudo isso vai no cPanel HostGator também.
-
-Se não quiser verificar agora, usar o domínio sandbox do Resend e deixar `RESEND_FROM=onboarding@resend.dev` provisoriamente.
-
-## TODO (placeholders no código)
-
-- `index.html` — depoimentos de Climátis/Odontolevek/Carolina (procurar `[depoimento pendente]`)
-- `index.html` — WhatsApp da Codertec no link `wa.me/5541999999999` (procurar comentário `TODO`)
-- Cloudflare env vars — `RESEND_API_KEY`, `RESEND_FROM`, `RESEND_LEAD_TO`
-
-## Wrangler (opcional, pra testar local)
+Pra rodar o Worker local com Wrangler:
 
 ```
 npm install -g wrangler
-wrangler pages dev .
+wrangler dev
 ```
 
-Aí roda em `http://localhost:8788` com as Functions ativas. Variáveis num arquivo `.dev.vars`:
+Roda em `http://localhost:8787`. As secrets vão em `.dev.vars` (gitignored):
 
 ```
 RESEND_API_KEY=re_xxx
 RESEND_FROM=onboarding@resend.dev
 RESEND_LEAD_TO=marlevek@gmail.com
 ```
+
+## Deploy
+
+Push pro GitHub → Cloudflare faz deploy automático (depois que você configurou a integração inicial).
+
+### Variáveis no Cloudflare
+
+Dashboard → projeto **atende-ai-landing** → **Settings → Variables and Secrets** → **Add variable**:
+
+| Variable | Value | Type |
+|---|---|---|
+| `RESEND_API_KEY` | chave da Resend (`re_...`) | **Secret** |
+| `RESEND_FROM` | `onboarding@resend.dev` (provisório) ou `leads@atendeai.codertec.com.br` (após verificar domínio na Resend) | Plaintext |
+| `RESEND_LEAD_TO` | `marlevek@gmail.com` (ou o e-mail que recebe os leads) | Plaintext |
+
+Depois de salvar, aba **Deployments** → último deploy → **⋯** → **Retry deployment** pra aplicar.
+
+## Apontar `atendeai.codertec.com.br`
+
+1. Cloudflare → projeto → **Custom domains** → **Set up a custom domain** → `atendeai.codertec.com.br`
+2. Cloudflare mostra o CNAME alvo (algo como `atende-ai-landing.marlevek.workers.dev`)
+3. HostGator cPanel → **Zone Editor** → **Manage** `codertec.com.br` → **Add Record**:
+   - Tipo `CNAME`, name `atendeai`, value `<o que o Cloudflare deu>`, TTL 14400
+4. Propaga em ~5-30 min, SSL automático
+
+## Resend — verificar o domínio remetente (opcional, depois)
+
+Pra mandar de `leads@atendeai.codertec.com.br` em vez do sandbox da Resend:
+- Resend → **Domains** → **Add** → `atendeai.codertec.com.br`
+- Seguir os DNS records (TXT/MX/SPF/DKIM) — todos no cPanel HostGator
+- Quando verificar, trocar `RESEND_FROM` na Cloudflare pra `leads@atendeai.codertec.com.br`
+
+## TODO (placeholders no código)
+
+- `public/index.html` — depoimentos de Climátis/Odontolevek/Carolina (procurar `[depoimento pendente]`)
+- `public/index.html` — WhatsApp da Codertec no link `wa.me/5541999999999` (procurar comentário `TODO`)
+- Cloudflare env vars — `RESEND_API_KEY`, `RESEND_FROM`, `RESEND_LEAD_TO`
