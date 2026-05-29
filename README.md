@@ -4,7 +4,7 @@ Landing pública do produto, em `atendeai.codertec.com.br`.
 
 Stack: **HTML + Tailwind via CDN** + **Cloudflare Workers Assets** (estáticos + Worker que trata o form do contato e envia e-mail via Resend).
 
-> Inicialmente foi montado como Pages Functions (`functions/api/lead.js`), mas a Cloudflare unificou Workers + Pages e o fluxo "Connect to Git" sempre cria Worker — então migramos pra **Workers Assets** (`wrangler.toml` + `src/index.js`). O comportamento pro usuário final é idêntico.
+> Inicialmente foi montado como Pages Functions (`functions/api/lead.js`), mas a Cloudflare unificou Workers + Pages e o fluxo "Connect to Git" sempre cria Worker — então migramos pra **Workers Assets** (`wrangler.jsonc` + `src/index.js`). O comportamento pro usuário final é idêntico.
 
 ---
 
@@ -12,7 +12,7 @@ Stack: **HTML + Tailwind via CDN** + **Cloudflare Workers Assets** (estáticos +
 
 ```
 atende-ai-landing/
-├── wrangler.toml           ← config do Worker (name, main, assets)
+├── wrangler.jsonc          ← config do Worker (gerada pelo PR autoconfig da Cloudflare, ajustada com main + binding ASSETS)
 ├── src/
 │   └── index.js            ← Worker: rota /api/lead + delega o resto pra ASSETS
 ├── public/
@@ -24,7 +24,7 @@ atende-ai-landing/
 
 ## Como funciona
 
-- `wrangler.toml` declara que o Worker é `src/index.js` e os estáticos vivem em `public/`.
+- `wrangler.jsonc` declara que o Worker é `src/index.js` e os estáticos vivem em `public/`.
 - Toda request entra no Worker.
   - `POST /api/lead` → handler `tratarLead()` que valida, anti-bot (honeypot), e chama API Resend
   - Qualquer outra → `env.ASSETS.fetch(request)` serve o arquivo correspondente em `public/`

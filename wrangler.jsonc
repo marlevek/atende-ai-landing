@@ -1,14 +1,21 @@
 {
+  // Config do Worker do atende-ai-landing.
+  //
+  // A Cloudflare gerou este arquivo via PR de autoconfig. Ajustamos pra
+  // que o Worker `src/index.js` rode (trata /api/lead) E sirva os
+  // estáticos de `public/` via binding ASSETS. Sem o `main` e o binding,
+  // o projeto ficava "static-only" e nem aceitava Variables/Secrets.
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "atende-ai-landing",
+  "main": "src/index.js",
   "compatibility_date": "2026-05-29",
+  "compatibility_flags": ["nodejs_compat"],
   "observability": {
     "enabled": true
   },
   "assets": {
-    "directory": "."
-  },
-  "compatibility_flags": [
-    "nodejs_compat"
-  ]
+    "directory": "./public",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page"
+  }
 }
