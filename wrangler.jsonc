@@ -13,6 +13,13 @@
   "observability": {
     "enabled": true
   },
+  // Variáveis não-sensíveis. PRECISAM ficar aqui — `wrangler deploy` reseta
+  // variáveis plaintext configuradas via dashboard a cada deploy.
+  // Apenas `RESEND_API_KEY` fica como Secret no dashboard (esse persiste).
+  "vars": {
+    "RESEND_FROM": "atende-ai@notificacoes.codertec.com.br",
+    "RESEND_LEAD_TO": "codertec.ia@gmail.com"
+  },
   "assets": {
     "directory": "./public",
     "binding": "ASSETS",
