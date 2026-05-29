@@ -1,0 +1,19 @@
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Node (caso a gente venha a usar Astro/Tailwind build no futuro)
+node_modules/
+dist/
+.wrangler/
+
+# Logs
+*.log
+
+# Segredos
+.env
+.env.*
+!.env.example
+.dev.vars

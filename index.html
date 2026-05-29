@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Atende AI — Atendente inteligente que aumenta a conversão do seu site</title>
+  <meta name="description" content="Widget de IA que entende o visitante do seu site, indica o serviço certo e leva direto pro WhatsApp. Setup em minutos. Já em climatização, odontologia e psicologia." />
+
+  <!-- Open Graph (compartilhamento) -->
+  <meta property="og:title" content="Atende AI — atendente inteligente pro seu site" />
+  <meta property="og:description" content="Widget de IA que indica o serviço certo e leva pro WhatsApp. Setup em minutos." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://atendeai.codertec.com.br" />
+  <meta property="og:locale" content="pt_BR" />
+
+  <!-- Tailwind via CDN — sem build step -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: { 950: "#070718", 900: "#0f1027", 800: "#181a3a" },
+            brand: {
+              50:  "#eef0ff",
+              100: "#dadefe",
+              300: "#9ea4fb",
+              500: "#6366f1",
+              600: "#4f46e5",
+              700: "#4338ca",
+            },
+            accent: { 400: "#22d3ee", 500: "#06b6d4" },
+            lime:   { 400: "#a3e635" },
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Tipografia -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-serif; }
+
+    /* gradiente de fundo do hero */
+    .hero-bg {
+      background:
+        radial-gradient(60% 50% at 20% 10%, rgba(99,102,241,0.35) 0%, transparent 60%),
+        radial-gradient(40% 40% at 90% 30%, rgba(6,182,212,0.25) 0%, transparent 60%),
+        linear-gradient(180deg, #07071a 0%, #0a0c2b 70%, #0a0c2b 100%);
+    }
+    .glass {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(12px);
+    }
+    .text-gradient {
+      background: linear-gradient(90deg, #c7d2fe 0%, #a5f3fc 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    /* widget mockup pulsing dot */
+    @keyframes pulse-dot { 0%,100% { opacity: 1 } 50% { opacity: 0.4 } }
+    .pulse-dot { animation: pulse-dot 1.6s ease-in-out infinite; }
+  </style>
+</head>
+
+<body class="bg-ink-950 text-slate-100 antialiased">
+
+  <!-- ─────────────────────────────────────── HEADER ─────── -->
+  <header class="hero-bg">
+    <nav class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-2 font-display font-bold text-xl">
+        <span class="inline-block w-8 h-8 rounded-lg bg-gradient-to-br from-brand-500 to-accent-500 grid place-items-center text-ink-950">
+          <!-- chat-bubble icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+            <path d="M4 4h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H8l-4 4V6a2 2 0 0 1 2-2Z"/>
+          </svg>
+        </span>
+        Atende AI
+      </a>
+      <div class="hidden md:flex items-center gap-7 text-sm text-slate-300">
+        <a href="#como-funciona" class="hover:text-white">Como funciona</a>
+        <a href="#casos" class="hover:text-white">Cases</a>
+        <a href="#precos" class="hover:text-white">Preços</a>
+        <a href="#contato" class="hover:text-white">Contato</a>
+      </div>
+      <a href="#contato" class="hidden md:inline-flex items-center px-4 py-2 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold">
+        Quero no meu site
+      </a>
+    </nav>
+
+    <!-- ────────────────────────────────────── HERO ─────── -->
+    <section class="max-w-7xl mx-auto px-6 pt-16 pb-24 md:pt-24 md:pb-32 grid md:grid-cols-2 gap-12 items-center">
+      <div>
+        <div class="inline-flex items-center gap-2 text-xs uppercase tracking-wide text-brand-300 mb-5">
+          <span class="w-2 h-2 rounded-full bg-lime-400 pulse-dot"></span>
+          IA conversacional em produção há meses
+        </div>
+        <h1 class="font-display font-extrabold text-4xl md:text-6xl leading-tight mb-6">
+          Seu site responde
+          <span class="text-gradient">no idioma do cliente</span>
+          — e leva ele pro WhatsApp.
+        </h1>
+        <p class="text-lg text-slate-300 mb-8 max-w-xl">
+          O <strong>Atende AI</strong> é um widget de IA que entende o que o visitante quer,
+          indica o serviço certo do seu catálogo e abre o WhatsApp com a conversa
+          já direcionada. Setup em minutos. Funciona pra clínica, oficina, agência.
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <a href="#contato" class="inline-flex items-center px-6 py-3 rounded-lg bg-brand-600 hover:bg-brand-700 font-semibold">
+            Começar teste de 7 dias
+          </a>
+          <a href="#como-funciona" class="inline-flex items-center px-6 py-3 rounded-lg glass hover:bg-white/10 font-semibold">
+            Ver como funciona →
+          </a>
+        </div>
+        <p class="text-xs text-slate-400 mt-4">Sem cartão. Sem instalação complicada. 1 linha de script no seu site.</p>
+      </div>
+
+      <!-- Widget mockup -->
+      <div class="relative">
+        <div class="glass rounded-2xl p-5 shadow-2xl max-w-md ml-auto">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-brand-500 to-accent-500"></div>
+            <div>
+              <div class="font-semibold">Atendente da Climátis</div>
+              <div class="text-xs text-slate-400 flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-lime-400 pulse-dot"></span>
+                online agora
+              </div>
+            </div>
+          </div>
+          <div class="space-y-3 text-sm">
+            <div class="bg-white/5 rounded-2xl rounded-tl-sm p-3">
+              Como podemos te ajudar?
+            </div>
+            <div class="ml-12 bg-brand-600 rounded-2xl rounded-tr-sm p-3 text-white">
+              meu ar não tá gelando
+            </div>
+            <div class="bg-white/5 rounded-2xl rounded-tl-sm p-3">
+              Beleza — isso costuma ser falta de gás ou sujeira no filtro.
+              A gente faz <strong>manutenção corretiva</strong> pra resolver isso.
+              <div class="mt-3 flex flex-wrap gap-2">
+                <button class="text-xs px-3 py-2 rounded-lg bg-lime-400/20 text-lime-300 border border-lime-400/40">
+                  Ver serviço
+                </button>
+                <button class="text-xs px-3 py-2 rounded-lg bg-emerald-500 text-white">
+                  Falar no WhatsApp
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="absolute -z-10 -inset-6 bg-gradient-to-br from-brand-500/20 to-accent-500/10 blur-3xl rounded-full"></div>
+      </div>
+    </section>
+  </header>
+
+  <!-- ─────────────────────────────────────── FEATURES ──── -->
+  <section class="bg-ink-900 py-20">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <h2 class="font-display font-extrabold text-3xl md:text-4xl mb-4">
+          Não é chatbot de árvore de decisão. É IA que <em>entende</em>.
+        </h2>
+        <p class="text-slate-400 text-lg">
+          O Atende AI lê seu catálogo de serviços e responde em linguagem natural.
+          Quanto melhor o catálogo, melhor a resposta — e você não paga por pergunta repetida.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="glass rounded-2xl p-6">
+          <div class="w-11 h-11 rounded-xl bg-brand-600/20 grid place-items-center mb-4">
+            <svg class="w-6 h-6 text-brand-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09Z"/></svg>
+          </div>
+          <h3 class="font-display font-bold text-lg mb-2">Entende contexto</h3>
+          <p class="text-slate-400 text-sm">
+            "Tá fazendo barulho", "não tá gelando", "dói quando mastigo" —
+            a IA mapeia pra serviço certo, sem o cliente saber o termo técnico.
+          </p>
+        </div>
+
+        <div class="glass rounded-2xl p-6">
+          <div class="w-11 h-11 rounded-xl bg-accent-500/20 grid place-items-center mb-4">
+            <svg class="w-6 h-6 text-accent-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5 10.5 21 21 7.5"/></svg>
+          </div>
+          <h3 class="font-display font-bold text-lg mb-2">Direciona pro WhatsApp</h3>
+          <p class="text-slate-400 text-sm">
+            Toda conversa termina no botão certo: ou na página do serviço,
+            ou direto no WhatsApp com mensagem pré-pronta. Lead não se perde.
+          </p>
+        </div>
+
+        <div class="glass rounded-2xl p-6">
+          <div class="w-11 h-11 rounded-xl bg-lime-400/20 grid place-items-center mb-4">
+            <svg class="w-6 h-6 text-lime-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z"/></svg>
+          </div>
+          <h3 class="font-display font-bold text-lg mb-2">Mostra o que falta no catálogo</h3>
+          <p class="text-slate-400 text-sm">
+            Toda pergunta que a IA não conseguiu responder vira insight no relatório:
+            é serviço que você tem e não descreveu — ou demanda nova.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────── COMO FUNCIONA ─────── -->
+  <section id="como-funciona" class="py-20">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-14">
+        <h2 class="font-display font-extrabold text-3xl md:text-4xl mb-3">Em 3 passos</h2>
+        <p class="text-slate-400">Você cuida do seu negócio, a gente cuida da IA.</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="relative">
+          <div class="text-6xl font-display font-extrabold text-brand-600/30 absolute -top-6 -left-1 select-none">1</div>
+          <div class="glass rounded-2xl p-6 pt-10">
+            <h3 class="font-display font-bold text-lg mb-2">Conta seu negócio</h3>
+            <p class="text-slate-400 text-sm">
+              Cadastra os serviços, o jeito que seu atendente fala, seu WhatsApp.
+              Em 15 minutos a IA já sabe quem você é.
+            </p>
+          </div>
+        </div>
+        <div class="relative">
+          <div class="text-6xl font-display font-extrabold text-brand-600/30 absolute -top-6 -left-1 select-none">2</div>
+          <div class="glass rounded-2xl p-6 pt-10">
+            <h3 class="font-display font-bold text-lg mb-2">Cola uma linha no site</h3>
+            <p class="text-slate-400 text-sm">
+              <code class="text-brand-300 text-xs">&lt;script src=".../widget.js"&gt;&lt;/script&gt;</code>
+              — funciona em WordPress, Wix, site próprio, qualquer um.
+            </p>
+          </div>
+        </div>
+        <div class="relative">
+          <div class="text-6xl font-display font-extrabold text-brand-600/30 absolute -top-6 -left-1 select-none">3</div>
+          <div class="glass rounded-2xl p-6 pt-10">
+            <h3 class="font-display font-bold text-lg mb-2">Cliente conversa, você fecha</h3>
+            <p class="text-slate-400 text-sm">
+              O widget responde 24/7, qualifica o lead e abre o WhatsApp com
+              o contexto já carregado. Você só responde quem está pronto.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────── CASES ─────── -->
+  <section id="casos" class="bg-ink-900 py-20">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-14">
+        <h2 class="font-display font-extrabold text-3xl md:text-4xl mb-3">Já está rodando em</h2>
+        <p class="text-slate-400">Três nichos diferentes — climatização, odontologia e psicologia.</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- TODO: substituir depoimentos pelos textos reais (pedir uma frase a cada cliente) -->
+        <div class="glass rounded-2xl p-6">
+          <div class="text-xs uppercase tracking-wide text-brand-300 mb-3">Climatização</div>
+          <h3 class="font-display font-bold text-lg mb-2">Climátis</h3>
+          <p class="text-slate-300 text-sm italic">
+            "[depoimento pendente — pedir frase à Climátis sobre como o widget está ajudando]"
+          </p>
+          <p class="text-slate-500 text-xs mt-4">climatis.com.br</p>
+        </div>
+        <div class="glass rounded-2xl p-6">
+          <div class="text-xs uppercase tracking-wide text-accent-400 mb-3">Odontologia</div>
+          <h3 class="font-display font-bold text-lg mb-2">Odontolevek</h3>
+          <p class="text-slate-300 text-sm italic">
+            "[depoimento pendente — pedir frase à Odontolevek]"
+          </p>
+          <p class="text-slate-500 text-xs mt-4">odontolevek.com.br</p>
+        </div>
+        <div class="glass rounded-2xl p-6">
+          <div class="text-xs uppercase tracking-wide text-lime-400 mb-3">Psicologia</div>
+          <h3 class="font-display font-bold text-lg mb-2">Carolina Levek</h3>
+          <p class="text-slate-300 text-sm italic">
+            "[depoimento pendente — pedir frase à Carolina]"
+          </p>
+          <p class="text-slate-500 text-xs mt-4">carolinalevek.com.br</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────── PREÇOS ─────── -->
+  <section id="precos" class="py-20">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-14">
+        <h2 class="font-display font-extrabold text-3xl md:text-4xl mb-3">Preço justo, sem letra miúda</h2>
+        <p class="text-slate-400">Buscas = perguntas reais (sem contar repetidas que ficam em cache).</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <!-- Básico -->
+        <div class="glass rounded-2xl p-6 flex flex-col">
+          <h3 class="font-display font-bold text-xl mb-1">Básico</h3>
+          <p class="text-slate-400 text-sm mb-5">Pequenos negócios e profissionais autônomos.</p>
+          <div class="mb-5">
+            <span class="text-4xl font-display font-extrabold">R$ 97</span>
+            <span class="text-slate-400">/mês</span>
+          </div>
+          <ul class="text-sm space-y-2 mb-6">
+            <li class="flex gap-2"><span class="text-lime-400">✓</span> 500 buscas/mês</li>
+            <li class="flex gap-2"><span class="text-lime-400">✓</span> Widget no seu site</li>
+            <li class="flex gap-2"><span class="text-lime-400">✓</span> WhatsApp integrado</li>
+            <li class="flex gap-2 text-slate-500"><span>—</span> Relatórios mensais</li>
+            <li class="flex gap-2 text-slate-500"><span>—</span> Multi-site</li>
+          </ul>
+          <a href="#contato" class="mt-auto block text-center px-4 py-2.5 rounded-lg glass hover:bg-white/10 font-semibold">Começar</a>
+        </div>
+
+        <!-- Pro -->
+        <div class="rounded-2xl p-6 flex flex-col border-2 border-brand-500 bg-gradient-to-b from-brand-600/20 to-transparent relative">
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-xs font-bold bg-brand-500 text-white">MAIS POPULAR</div>
+          <h3 class="font-display font-bold text-xl mb-1">Pro</h3>
+          <p class="text-slate-400 text-sm mb-5">Para quem quer entender o que o cliente busca.</p>
+          <div class="mb-5">
+            <span class="text-4xl font-display font-extrabold">R$ 197</span>
+            <span class="text-slate-400">/mês</span>
+          </div>
+          <ul class="text-sm space-y-2 mb-6">
+            <li class="flex gap-2"><span class="text-lime-400">✓</span> 2.000 buscas/mês</li>
+            <li class="flex gap-2"><span class="text-lime-400">✓</span> Widget no seu site</li>
+            <li class="flex gap-2"><span class="text-lime-400">✓</span> WhatsApp integrado</li>
+            <li class="flex gap-2"><span class="text-lime-400">✓</span> Relatórios mensais</li>
+            <li class="flex gap-2 text-slate-500"><span>—</span> Multi-site</li>
+          </ul>
+          <a href="#contato" class="mt-auto block text-center px-4 py-2.5 rounded-lg bg-brand-600 hover:bg-brand-700 font-semibold">Começar</a>
+        </div>
+
+        <!-- Premium -->
+        <div class="glass rounded-2xl p-6 flex flex-col">
+          <h3 class="font-display font-bold text-xl mb-1">Premium</h3>
+          <p class="text-slate-400 text-sm mb-5">Múltiplas marcas, alta demanda, marca branca.</p>
+          <div class="mb-5">
+            <span class="text-4xl font-display font-extrabold">R$ 397</span>
+            <span class="text-slate-400">/mês</span>
+          </div>
+          <ul class="text-sm space-y-2 mb-6">
+            <li class="flex gap-2"><span class="text-lime-400">✓</span> 10.000 buscas/mês</li>
+            <li class="flex gap-2"><span class="text-lime-400">✓</span> Widget no seu site</li>
+            <li class="flex gap-2"><span class="text-lime-400">✓</span> WhatsApp integrado</li>
+            <li class="flex gap-2"><span class="text-lime-400">✓</span> Relatórios mensais</li>
+            <li class="flex gap-2"><span class="text-lime-400">✓</span> Multi-site + marca branca</li>
+          </ul>
+          <a href="#contato" class="mt-auto block text-center px-4 py-2.5 rounded-lg glass hover:bg-white/10 font-semibold">Começar</a>
+        </div>
+      </div>
+      <p class="text-center text-sm text-slate-500 mt-8">
+        Todos os planos começam com <strong class="text-slate-300">7 dias de teste grátis</strong>, sem cartão. Cancele quando quiser.
+      </p>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────── CONTATO ─────── -->
+  <section id="contato" class="bg-ink-900 py-20">
+    <div class="max-w-3xl mx-auto px-6">
+      <div class="text-center mb-10">
+        <h2 class="font-display font-extrabold text-3xl md:text-4xl mb-3">Vamos colocar no seu site</h2>
+        <p class="text-slate-400">Conta um pouco do seu negócio que a gente responde no mesmo dia.</p>
+      </div>
+
+      <div class="glass rounded-2xl p-6 md:p-8">
+        <form id="lead-form" class="space-y-4">
+          <div class="grid md:grid-cols-2 gap-4">
+            <label class="block">
+              <span class="text-sm text-slate-300">Seu nome</span>
+              <input name="nome" required type="text" class="mt-1 w-full bg-ink-950/50 border border-white/10 rounded-lg px-3 py-2.5 focus:border-brand-500 focus:outline-none" />
+            </label>
+            <label class="block">
+              <span class="text-sm text-slate-300">E-mail</span>
+              <input name="email" required type="email" class="mt-1 w-full bg-ink-950/50 border border-white/10 rounded-lg px-3 py-2.5 focus:border-brand-500 focus:outline-none" />
+            </label>
+          </div>
+          <div class="grid md:grid-cols-2 gap-4">
+            <label class="block">
+              <span class="text-sm text-slate-300">WhatsApp</span>
+              <input name="whatsapp" type="tel" placeholder="(41) 9 9999-9999" class="mt-1 w-full bg-ink-950/50 border border-white/10 rounded-lg px-3 py-2.5 focus:border-brand-500 focus:outline-none" />
+            </label>
+            <label class="block">
+              <span class="text-sm text-slate-300">Site (opcional)</span>
+              <input name="site" type="url" placeholder="https://" class="mt-1 w-full bg-ink-950/50 border border-white/10 rounded-lg px-3 py-2.5 focus:border-brand-500 focus:outline-none" />
+            </label>
+          </div>
+          <label class="block">
+            <span class="text-sm text-slate-300">Como podemos ajudar?</span>
+            <textarea name="mensagem" rows="3" class="mt-1 w-full bg-ink-950/50 border border-white/10 rounded-lg px-3 py-2.5 focus:border-brand-500 focus:outline-none"></textarea>
+          </label>
+          <!-- honeypot anti-spam: humano não enxerga -->
+          <input type="text" name="empresa_extra" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+
+          <div class="flex flex-col sm:flex-row gap-3 pt-2">
+            <button type="submit" class="flex-1 px-5 py-3 rounded-lg bg-brand-600 hover:bg-brand-700 font-semibold disabled:opacity-60 disabled:cursor-not-allowed">
+              Enviar
+            </button>
+            <!-- TODO: trocar 5541999999999 pelo WhatsApp real da Codertec -->
+            <a href="https://wa.me/5541999999999?text=Quero%20saber%20mais%20sobre%20o%20Atende%20AI"
+               target="_blank" rel="noopener"
+               class="flex-1 text-center px-5 py-3 rounded-lg bg-emerald-600 hover:bg-emerald-700 font-semibold">
+              Falar no WhatsApp
+            </a>
+          </div>
+          <div id="form-msg" class="text-sm hidden"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────── FOOTER ─────── -->
+  <footer class="py-10 border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-slate-400">
+      <div>© <span id="ano"></span> Atende AI — uma solução <a href="https://codertec.com.br" class="text-brand-300 hover:text-brand-500">Codertec</a>.</div>
+      <div class="flex items-center gap-5">
+        <a href="#precos" class="hover:text-white">Preços</a>
+        <a href="#contato" class="hover:text-white">Contato</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('ano').textContent = new Date().getFullYear();
+
+    // ─── envio do form ────────────────────────────────────────────────────
+    const form = document.getElementById('lead-form');
+    const msg  = document.getElementById('form-msg');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = form.querySelector('button[type=submit]');
+      btn.disabled = true;
+      btn.textContent = 'Enviando…';
+      msg.classList.add('hidden');
+
+      const dados = Object.fromEntries(new FormData(form).entries());
+
+      try {
+        const r = await fetch('/api/lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(dados),
+        });
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        msg.textContent = 'Recebido! A gente responde no mesmo dia.';
+        msg.className = 'text-sm text-lime-400';
+        msg.classList.remove('hidden');
+        form.reset();
+      } catch (err) {
+        msg.textContent = 'Deu erro no envio. Manda direto no WhatsApp que a gente resolve.';
+        msg.className = 'text-sm text-red-300';
+        msg.classList.remove('hidden');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Enviar';
+      }
+    });
+  </script>
+</body>
+</html>
