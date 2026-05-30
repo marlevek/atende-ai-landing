@@ -1,6 +1,6 @@
-# Atende AI — landing page
+# AtendeSite — landing page
 
-Landing pública do produto, em `atendeai.codertec.com.br`.
+Landing pública do produto, hoje em `atendeai.codertec.com.br` (domínio definitivo: `atendesite.com.br`, a apontar).
 
 Stack: **HTML + Tailwind via CDN** + **Cloudflare Workers Assets** (estáticos + Worker que trata o form do contato e envia e-mail via Resend).
 
@@ -82,5 +82,4 @@ Pra mandar de `leads@atendeai.codertec.com.br` em vez do sandbox da Resend:
 ## TODO (placeholders no código)
 
 - `public/index.html` — depoimentos de Climátis/Odontolevek/Carolina (procurar `[depoimento pendente]`)
-- `public/index.html` — WhatsApp da Codertec no link `wa.me/5541999999999` (procurar comentário `TODO`)
 - Cloudflare env vars — `RESEND_API_KEY`, `RESEND_FROM`, `RESEND_LEAD_TO`
