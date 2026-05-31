@@ -1,6 +1,6 @@
 # AtendeSite — landing page
 
-Landing pública do produto, hoje em `atendeai.codertec.com.br` (domínio definitivo: `atendesite.com.br`, a apontar).
+Landing pública do produto em `atendesite.com.br`.
 
 Stack: **HTML + Tailwind via CDN** + **Cloudflare Workers Assets** (estáticos + Worker que trata o form do contato e envia e-mail via Resend).
 
@@ -64,13 +64,15 @@ Dashboard → projeto **atende-ai-landing** → **Settings → Variables and Sec
 
 Depois de salvar, aba **Deployments** → último deploy → **⋯** → **Retry deployment** pra aplicar.
 
-## Apontar `atendeai.codertec.com.br`
+## Domínio `atendesite.com.br`
 
-1. Cloudflare → projeto → **Custom domains** → **Set up a custom domain** → `atendeai.codertec.com.br`
-2. Cloudflare mostra o CNAME alvo (algo como `atende-ai-landing.marlevek.workers.dev`)
-3. HostGator cPanel → **Zone Editor** → **Manage** `codertec.com.br` → **Add Record**:
-   - Tipo `CNAME`, name `atendeai`, value `<o que o Cloudflare deu>`, TTL 14400
-4. Propaga em ~5-30 min, SSL automático
+Domínio próprio do produto (registrado em 2026-05-30), apontado pro Worker via
+Cloudflare → projeto **atende-ai-landing** → **Custom domains**. Como é apex
+(raiz), o DNS é resolvido pela Cloudflare (CNAME flattening / registros que o
+próprio painel da Cloudflare orienta ao adicionar o custom domain). SSL
+(Let's Encrypt) é emitido automaticamente após a propagação.
+
+> Worker direto (sempre disponível, sem domínio): `atende-ai-landing.marlevek.workers.dev`
 
 ## Resend — verificar o domínio remetente (opcional, depois)
 
